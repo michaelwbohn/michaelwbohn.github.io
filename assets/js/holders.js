@@ -1,7 +1,17 @@
 (function ($) {
 	$(document).ready(function() {
-		$.get("http://www.whateverorigin.org/get?url=" + encodeURIComponent("https://etherscan.io/token/0xcd7492db29e2ab436e819b249452ee1bbdf52214"), function(response) {
-			$("#holder_count").html($(response).find("#ContentPlaceHolder1_tr_tokenHolders").find(".mr-3").html().trim().split(' ')[0]);
+		var ethexplorer = "EK-5UhBZ-bVLfdyY-jUqwE";
+		var tokenContract = "0xcd7492db29e2ab436e819b249452ee1bbdf52214";
+		$.ajax({
+			type: 'GET',
+			url: "https://api.ethplorer.io/getTokenInfo/${tokenContract}?apiKey=${ethexplorer}",
+			dataType: 'json',
+			success: function(data) {
+				$("#holder_count").html(data['holdersCount']);
+			},
+			error: function(data) {
+				$("#holder_count").html('???');
+			}
 		});
 	});
 })(jQuery);	
